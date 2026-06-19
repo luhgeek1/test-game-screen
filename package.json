@@ -1,0 +1,14 @@
+{
+  "name": "ui-test-main-screen",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "python3 -m http.server 8731",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.58.2",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0"
+  }
+}
