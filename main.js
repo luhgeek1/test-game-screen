@@ -328,13 +328,14 @@ function create(images) {
   icon.call(this, 'mainOffer_1', offerX + offerW / 2, offerY + offerH / 2, offerW, offerH);
 
   (function drawSeal(scene, cx, cy, r) {
-    const spikes = 11;
+    const spikes = 12;
     const innerRatio = 0.9;
+    const phase = Phaser.Math.DegToRad(8);
     const makePoints = (ox, oy, radius) => {
       const pts = [];
       for (let i = 0; i < spikes * 2; i++) {
         const rad = i % 2 === 0 ? radius : radius * innerRatio;
-        const ang = (Math.PI * 2 * i) / (spikes * 2) - Math.PI / 2;
+        const ang = (Math.PI * 2 * i) / (spikes * 2) - Math.PI / 2 + phase;
         pts.push(new Phaser.Math.Vector2(ox + Math.cos(ang) * rad, oy + Math.sin(ang) * rad));
       }
       return pts;
@@ -352,23 +353,26 @@ function create(images) {
     grShadow.fillPath();
 
     const grGold = scene.add.graphics();
-    grGold.fillStyle(0x6b4408, 1);
+    grGold.fillStyle(0x5e3a06, 1);
     polyPath(grGold, makePoints(cx, cy, r));
     grGold.fillPath();
-    grGold.fillStyle(0xf6d670, 1);
-    polyPath(grGold, makePoints(cx, cy - 0.6, r * 0.96));
+    grGold.fillStyle(0xce9a0b, 1);
+    polyPath(grGold, makePoints(cx, cy - 0.5, r * 0.97));
+    grGold.fillPath();
+    grGold.fillStyle(0xe6cf78, 1);
+    polyPath(grGold, makePoints(cx - 0.7, cy - 1, r * 0.93));
     grGold.fillPath();
 
-    const innerR = r * 0.76;
+    const innerR = r * 0.86;
     const size = Math.ceil(innerR * 2.2);
     const key = 'sealGrad_' + size;
     if (!scene.textures.exists(key)) {
       const tex = scene.textures.createCanvas(key, size, size);
       const ctx = tex.getContext();
-      const grad = ctx.createLinearGradient(0, 0, size, size);
-      grad.addColorStop(0, '#c31914');
-      grad.addColorStop(0.4, '#8a0f0c');
-      grad.addColorStop(1, '#560908');
+      const grad = ctx.createLinearGradient(size, 0, 0, size);
+      grad.addColorStop(0, '#7a0d0b');
+      grad.addColorStop(0.5, '#aa120f');
+      grad.addColorStop(1, '#e01b15');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, size, size);
       tex.refresh();
@@ -386,14 +390,14 @@ function create(images) {
 
     const textStyle = {
       fontFamily: 'Arial Black, Arial, sans-serif',
-      fontSize: '13px',
+      fontSize: '14px',
       fontStyle: 'bold',
     };
-    scene.add.text(cx + 1, cy + 1.5, '+100%', { ...textStyle, color: '#4a2400' })
-      .setOrigin(0.5).setRotation(Phaser.Math.DegToRad(12));
-    scene.add.text(cx, cy, '+100%', { ...textStyle, color: '#ffe9a8' })
-      .setOrigin(0.5).setRotation(Phaser.Math.DegToRad(12));
-  })(this, offerX + offerW - 23, offerY + 24, 22);
+    scene.add.text(cx + 1, cy + 1.5, '+100%', { ...textStyle, color: '#3d0a05' })
+      .setOrigin(0.5).setRotation(Phaser.Math.DegToRad(-16));
+    scene.add.text(cx, cy, '+100%', { ...textStyle, color: '#d8c067' })
+      .setOrigin(0.5).setRotation(Phaser.Math.DegToRad(-16));
+  })(this, offerX + offerW - 25, offerY + 27.5, 26);
 
   this.add.image(1375, 210, 'mainOfferTimer').setOrigin(0).setDisplaySize(116, 24);
   this.add.text(1432, 223, '10h 2m', {
@@ -408,9 +412,9 @@ function create(images) {
   whiteLabel.call(this, 92, 820, 'Bank', 20);
   redBadge.call(this, 145, 648, 27);
 
-  icon.call(this, 'button_collections', 327, 762, 130, 114);
+  icon.call(this, 'button_collections', 327, 767, 130, 130);
   whiteLabel.call(this, 324, 823, 'Collections', 18);
-  redBadge.call(this, 379, 730, 27);
+  redBadge.call(this, 376, 729, 27);
 
   const playW = 230, playH = 226, playX = 1262, playY = 611;
   icon.call(this, 'playButtonEmpty', playX + playW / 2, playY + playH / 2, playW, playH);
