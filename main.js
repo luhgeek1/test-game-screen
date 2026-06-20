@@ -220,6 +220,28 @@ function create(images) {
     return img;
   }
 
+  function iconLeftShade(key, x, y, w, h) {
+    const shadeKey = 'leftShade';
+    if (!this.textures.exists(shadeKey)) {
+      const sw = 128, sh = 128;
+      const tex = this.textures.createCanvas(shadeKey, sw, sh);
+      const ctx = tex.getContext();
+      const grad = ctx.createLinearGradient(0, 0, sw, 0);
+      grad.addColorStop(0, 'rgba(20,30,46,0.42)');
+      grad.addColorStop(0.45, 'rgba(20,30,46,0)');
+      grad.addColorStop(1, 'rgba(20,30,46,0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, sw, sh);
+      tex.refresh();
+    }
+    const shade = this.add.image(x, y, shadeKey);
+    shade.setDisplaySize(w, h);
+    const maskImg = this.add.image(x, y, key).setVisible(false);
+    maskImg.setDisplaySize(w, h);
+    shade.setMask(maskImg.createBitmapMask());
+    return shade;
+  }
+
   function redBadge(x, y, size, showMark = true) {
     if (!showMark) {
       const img = this.add.image(x, y, 'redHint');
@@ -252,9 +274,10 @@ function create(images) {
   }
 
   function sideButton(opts) {
-    const { x, y, w, h, key, iconW, iconH, label, hasBadge, labelY, labelSize = 19, labelStroke = 4, badgeX, badgeY, badgeSize = 26, shadow = true } = opts;
+    const { x, y, w, h, key, iconW, iconH, label, hasBadge, labelY, labelSize = 19, labelStroke = 4, badgeX, badgeY, badgeSize = 26, shadow = true, leftShade = false } = opts;
     if (shadow) iconShadow.call(this, key, x + w / 2, y + h / 2, iconW, iconH);
     icon.call(this, key, x + w / 2, y + h / 2, iconW, iconH);
+    if (leftShade) iconLeftShade.call(this, key, x + w / 2, y + h / 2, iconW, iconH);
     whiteLabel.call(this, x + w / 2, labelY !== undefined ? labelY : y + h + 14, label, labelSize, labelStroke);
     if (hasBadge) {
       redBadge.call(this, badgeX !== undefined ? badgeX : x + w - 6, badgeY !== undefined ? badgeY : y + 6, badgeSize);
@@ -279,7 +302,7 @@ function create(images) {
 
   sideButton.call(this, {
     x: 9, y: 144, w: 106, h: 84,
-    key: 'tasks', iconW: 114, iconH: 118,
+    key: 'tasks', iconW: 114, iconH: 118, leftShade: true,
     label: 'Tasks', hasBadge: true, labelY: 228, labelSize: 20, labelStroke: 1, badgeX: 104, badgeY: 169, badgeSize: 28,
   });
 
