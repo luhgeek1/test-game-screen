@@ -7,6 +7,7 @@ import path from 'node:path';
 const ROOT_DIR = path.resolve(__dirname, '..');
 const REFERENCE_PATH = path.join(ROOT_DIR, 'reference_screenshot.png');
 const OUTPUT_DIR = path.join(ROOT_DIR, 'test-results', 'main-screen');
+const MAX_DIFF_RATIO = 0.019;
 
 test('main screen pixel diff vs reference', async ({ page }) => {
   await page.goto('/index.html');
@@ -39,5 +40,5 @@ test('main screen pixel diff vs reference', async ({ page }) => {
   console.log(`expected: ${expectedPath}`);
   console.log(`diff:     ${diffPath}`);
 
-  expect(ratio).toBeLessThan(0.5);
+  expect(ratio).toBeLessThan(MAX_DIFF_RATIO);
 });
