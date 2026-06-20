@@ -274,11 +274,13 @@ function create(images) {
   }
 
   function sideButton(opts) {
-    const { x, y, w, h, key, iconW, iconH, label, hasBadge, labelY, labelSize = 19, labelStroke = 4, badgeX, badgeY, badgeSize = 26, shadow = true, leftShade = false } = opts;
-    if (shadow) iconShadow.call(this, key, x + w / 2, y + h / 2, iconW, iconH);
-    icon.call(this, key, x + w / 2, y + h / 2, iconW, iconH);
-    if (leftShade) iconLeftShade.call(this, key, x + w / 2, y + h / 2, iconW, iconH);
-    whiteLabel.call(this, x + w / 2, labelY !== undefined ? labelY : y + h + 14, label, labelSize, labelStroke);
+    const { x, y, w, h, key, iconW, iconH, label, hasBadge, labelY, labelSize = 19, labelStroke = 4, badgeX, badgeY, badgeSize = 26, shadow = true, leftShade = false, iconCX, labelX } = opts;
+    const cx = iconCX !== undefined ? iconCX : x + w / 2;
+    const lx = labelX !== undefined ? labelX : x + w / 2;
+    if (shadow) iconShadow.call(this, key, cx, y + h / 2, iconW, iconH);
+    icon.call(this, key, cx, y + h / 2, iconW, iconH);
+    if (leftShade) iconLeftShade.call(this, key, cx, y + h / 2, iconW, iconH);
+    whiteLabel.call(this, lx, labelY !== undefined ? labelY : y + h + 14, label, labelSize, labelStroke);
     if (hasBadge) {
       redBadge.call(this, badgeX !== undefined ? badgeX : x + w - 6, badgeY !== undefined ? badgeY : y + 6, badgeSize);
     }
@@ -302,14 +304,14 @@ function create(images) {
 
   sideButton.call(this, {
     x: 9, y: 144, w: 106, h: 84,
-    key: 'tasks', iconW: 114, iconH: 118, leftShade: true,
-    label: 'Tasks', hasBadge: true, labelY: 228, labelSize: 20, labelStroke: 1, badgeX: 104, badgeY: 169, badgeSize: 28,
+    key: 'tasks', iconW: 122, iconH: 126, leftShade: true, iconCX: 58, labelX: 60,
+    label: 'Tasks', hasBadge: true, labelY: 228, labelSize: 20, labelStroke: 3, badgeX: 104, badgeY: 169, badgeSize: 28,
   });
 
   sideButton.call(this, {
     x: 18, y: 269, w: 98, h: 80,
-    key: 'button_chat', iconW: 104, iconH: 102,
-    label: 'Chat', hasBadge: true, labelY: 349, labelStroke: 2, badgeX: 102, badgeY: 282,
+    key: 'button_chat', iconW: 108, iconH: 106, iconCX: 64, labelX: 61,
+    label: 'Chat', hasBadge: true, labelY: 349, labelStroke: 3, badgeX: 102, badgeY: 282,
   });
 
   sideButton.call(this, {
